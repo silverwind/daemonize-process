@@ -23,6 +23,7 @@ module.exports = function(opts) {
     opts = Object.assign(defaults, opts);
     process.env[id] = true;
     require("child_process").spawn(opts.node, [opts.script].concat(opts.arguments), opts).unref();
+    delete process.env[id];
     process.exit(opts.exitCode);
   }
 };
