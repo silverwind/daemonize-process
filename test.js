@@ -11,7 +11,7 @@ const assert = require("assert");
 fork("test-child.js").on("exit", function() {
   setTimeout(function() {
     const [ppid, envVar] = fs.readFileSync("test-output", "utf8").split(",");
-    assert(["0,", "1"].includes(ppid));
+    assert(["0", "1"].includes(ppid));
     assert(envVar === "false");
     fs.unlinkSync("test-output");
   }, 100);
