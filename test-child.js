@@ -5,4 +5,5 @@ const fs = require("fs");
 
 require(".")();
 
-fs.writeFileSync(path.join(__dirname, "ppid"), String(process.ppid));
+const output = [String(process.ppid), "_DAEMONIZE_PROCESS" in process.env].join(",");
+fs.writeFileSync(path.join(__dirname, "test-output"), output);

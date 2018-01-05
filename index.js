@@ -16,14 +16,13 @@ const defaults = {
 
 module.exports = function(opts) {
   if (id in process.env) {
-    // We are in the child, just clean up the env variable
+    // In the child, clean up the tracking environment variable
     delete process.env[id];
   } else {
-    // We are in the parent, fork a child and exit
-    opts = Object.assign(defaults, opts);
-    process.env[id] = true;
+    // In the parent, set the tracking environment variable, fork the child and exit
+    opts = Object.assign({}, defaults, opts);
+    opts.env = Object.assign({}, opts.env, {[id]: true});
     require("child_process").spawn(opts.node, [opts.script].concat(opts.arguments), opts).unref();
-    delete process.env[id];
     process.exit(opts.exitCode);
   }
 };
