@@ -1,5 +1,5 @@
 lint:
-	eslint --color --quiet *.js
+	node_modules/.bin/eslint --color --quiet *.js
 
 test:
 	$(MAKE) lint
