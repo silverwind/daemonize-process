@@ -1,0 +1,28 @@
+{
+  "name": "daemonize-process",
+  "version": "0.1.0",
+  "description": "Daemonize the current Node.js process",
+  "author": "silverwind <me@silverwind.io>",
+  "repository": "silverwind/daemonize-process",
+  "license": "BSD-2-Clause",
+  "scripts": {
+    "test": "make test"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "daemonize",
+    "daemon",
+    "background",
+    "process"
+  ],
+  "devDependencies": {
+    "eslint": "^4.13.1",
+    "eslint-config-silverwind": "^1.0.33",
+    "updates": "^2.0.3"
+  }
+}
