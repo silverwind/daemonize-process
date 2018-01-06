@@ -5,8 +5,8 @@ const fork = require("child_process").fork;
 const assert = require("assert");
 
 // This tests whether the parent pid of the daemonized process is 0 or 1 which
-// indicates the process was correctly orphaned. Also, it checks the the internal
-// environment variable is not leaked in the child
+// indicates the process was correctly orphaned. Also, it verifies the the
+// internal tracking environment variable is not leaked in the child.
 
 fork("test-child.js").on("exit", function() {
   setTimeout(function() {

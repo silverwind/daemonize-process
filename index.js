@@ -21,7 +21,7 @@ module.exports = function(opts) {
   } else {
     // In the parent, set the tracking environment variable, fork the child and exit
     opts = Object.assign({}, defaults, opts);
-    opts.env = Object.assign({}, opts.env, {[id]: true});
+    opts.env = Object.assign({}, opts.env, {[id]: "1"});
     require("child_process").spawn(opts.node, [opts.script].concat(opts.arguments), opts).unref();
     process.exit(opts.exitCode);
   }
