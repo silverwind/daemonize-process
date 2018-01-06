@@ -11,7 +11,7 @@ The module re-spawns the current process and then exits, which will lead to the 
 
 ## Install
 
-```sh
+```console
 $ npm install --save daemonize-process
 ```
 
