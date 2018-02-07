@@ -32,7 +32,7 @@ The `options` object can contain any valid [`child_process.spawn` option](https:
 - `node` *string* - The path to the Node.js binary to be used. Default: The current Node.js binary.
 - `exitCode` *number* - The exit code to be used when exiting the parent process. Default: `0`.
 
-By default the standard streams of the child are ignored (e.g. attached to `/dev/null` or equivalent). If you need these streams, change the `stdio` option.
+By default the standard streams of the child are ignored (e.g. attached to `/dev/null` or equivalent). If you need these streams, adjust the `stdio` option.
 
 ## License
 
