@@ -10,7 +10,7 @@ module.exports = function(opts) {
     // In the parent, set the tracking environment variable, fork the child and exit
     opts = Object.assign({}, {
       // spawn options
-      env: Object.assign({}, process.env, opts && opts.env, {[id]: "1"}),
+      env: process.env,
       cwd: process.cwd(),
       stdio: "ignore",
       detached: true,
@@ -20,6 +20,7 @@ module.exports = function(opts) {
       arguments: process.argv.slice(2),
       exitCode: 0,
     }, opts);
+    opts.env = Object.assign({}, opts.env, {[id]: "1"});
     require("child_process").spawn(opts.node, [opts.script].concat(opts.arguments), opts).unref();
     process.exit(opts.exitCode);
   }
