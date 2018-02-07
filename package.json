@@ -1,6 +1,6 @@
 {
   "name": "daemonize-process",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Daemonize the current Node.js process",
   "author": "silverwind <me@silverwind.io>",
   "repository": "silverwind/daemonize-process",
