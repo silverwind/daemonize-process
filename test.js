@@ -8,8 +8,8 @@ const assert = require("assert");
 // indicates the process was correctly orphaned. Also, it verifies the the
 // internal tracking environment variable is not leaked in the child.
 
-fork("test-child.js").on("exit", function() {
-  setTimeout(function() {
+fork("test-child.js").on("exit", () => {
+  setTimeout(() => {
     const [ppid, envVar] = fs.readFileSync("test-output", "utf8").split(",");
     fs.unlinkSync("test-output");
     assert(["0", "1"].includes(ppid));

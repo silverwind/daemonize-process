@@ -1,30 +1,33 @@
-lint:
-	node_modules/.bin/eslint --color --quiet *.js
-
+.PHONY: test
 test:
-	$(MAKE) lint
-	node --trace-deprecation --throw-deprecation test.js
+	npx eslint --color --quiet *.js
+	node --pending-deprecation --trace-deprecation --throw-deprecation --trace-warnings test.js
 
+.PHONY: publish
 publish:
 	git push -u --tags origin master
 	npm publish
 
+.PHONY: update
 update:
-	node_modules/.bin/updates -u
+	npx updates -u
 	rm -rf node_modules
-	yarn
+	npm i
 
-npm-patch:
-	npm version patch
+.PHONY: patch
+patch:
+	$(MAKE) test
+	npx ver patch
+	$(MAKE) publish
 
-npm-minor:
-	npm version minor
+.PHONY: minor
+minor:
+	$(MAKE) test
+	npx ver minor
+	$(MAKE) publish
 
-npm-major:
-	npm version major
-
-patch: lint test npm-patch publish
-minor: lint test npm-minor publish
-major: lint test npm-major publish
-
-.PHONY: lint test touch update patch minor major npm-patch npm-minor npm-major
+.PHONY: major
+major:
+	$(MAKE) test
+	npx ver major
+	$(MAKE) publish

@@ -9,7 +9,7 @@
     "test": "make test"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "files": [
     "index.js"
@@ -21,8 +21,9 @@
     "process"
   ],
   "devDependencies": {
-    "eslint": "^4.16.0",
-    "eslint-config-silverwind": "^1.0.35",
-    "updates": "^2.1.0"
+    "eslint": "^5.7.0",
+    "eslint-config-silverwind": "^2.0.9",
+    "updates": "^5.0.1",
+    "ver": "^3.0.0"
   }
 }
