@@ -3,22 +3,29 @@
 
 > Daemonize the current Node.js process
 
-The module re-spawns the current process and then exits, which will lead to the new child process being adopted by `init` or similar mechanisms, effectively putting the current process into the background. Differences to the popular `daemon` module include:
+The module re-spawns the current process and then exits, which will lead to the new child process being adopted by `init` or similar mechanisms, effectively putting the current process into the background.
 
-- Fully configurable, exposes all options of `child_process.spawn`.
+Differences to the popular `daemon` module include:
+
+- Exposes all options of `child_process.spawn`.
 - Cleans up `process.env` after itself.
 - Works on Node.js >= 8.
 
 ## Install
 
 ```console
-$ npm install --save daemonize-process
+$ npm install daemonize-process
 ```
 
-## Example
+## Examples
 
 ```js
 require('daemonize-process')();
+```
+
+```js
+import daemonizeProcess from 'daemonize-process';
+daemonizeProcess();
 ```
 
 ## API
