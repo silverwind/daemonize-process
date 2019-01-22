@@ -21,9 +21,9 @@
     "process"
   ],
   "devDependencies": {
-    "eslint": "^5.7.0",
-    "eslint-config-silverwind": "^2.0.9",
-    "updates": "^5.0.1",
-    "ver": "^3.0.0"
+    "eslint": "^5.12.1",
+    "eslint-config-silverwind": "^2.0.14",
+    "updates": "^6.2.1",
+    "ver": "^3.0.1"
   }
 }
