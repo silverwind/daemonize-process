@@ -8,9 +8,10 @@ module.exports = function(opts) {
     delete process.env[id];
   } else {
     // In the parent, set the tracking environment variable, fork the child and exit
-    opts = Object.assign({}, {
+    opts = opts || {};
+    const o = Object.assign({
       // spawn options
-      env: process.env,
+      env: Object.assign(process.env, opts.env, {[id]: "1"}),
       cwd: process.cwd(),
       stdio: "ignore",
       detached: true,
@@ -20,8 +21,7 @@ module.exports = function(opts) {
       arguments: process.argv.slice(2),
       exitCode: 0,
     }, opts);
-    opts.env = Object.assign({}, opts.env, {[id]: "1"});
-    require("child_process").spawn(opts.node, [opts.script].concat(opts.arguments), opts).unref();
-    process.exit(opts.exitCode);
+    require("child_process").spawn(o.node, [o.script].concat(o.arguments), o).unref();
+    process.exit(o.exitCode);
   }
 };
