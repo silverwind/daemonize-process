@@ -24,7 +24,7 @@ test("simple", done => {
   const child = fork(join(testDir, "child.js"));
 
   child.on("exit", async () => {
-    await sleep(100);
+    await sleep(1000); // give the child some time to exit
     const [ppid, envVar] = (await readFile(join(testDir, "test-output"), "utf8")).split(",");
 
     // check if process was correctly orphaned. on unix, this should generally mean that
