@@ -5,11 +5,12 @@
   "author": "silverwind <me@silverwind.io>",
   "repository": "silverwind/daemonize-process",
   "license": "BSD-2-Clause",
+  "main": "index.js",
   "scripts": {
     "test": "make test"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=10"
   },
   "files": [
     "index.js"
@@ -21,9 +22,16 @@
     "process"
   ],
   "devDependencies": {
-    "eslint": "^5.12.1",
-    "eslint-config-silverwind": "^2.0.14",
-    "updates": "^6.2.1",
-    "ver": "^3.0.1"
+    "del": "5.1.0",
+    "eslint": "6.8.0",
+    "eslint-config-silverwind": "10.0.1",
+    "jest": "25.1.0",
+    "tempy": "0.5.0",
+    "updates": "10.2.3",
+    "versions": "8.2.5"
+  },
+  "jest": {
+    "verbose": false,
+    "testTimeout": 10000
   }
 }

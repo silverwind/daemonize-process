@@ -1,33 +1,29 @@
-.PHONY: test
 test:
-	npx eslint --color --quiet *.js
-	node --pending-deprecation --trace-deprecation --throw-deprecation --trace-warnings test.js
+	yarn -s run eslint --color .
+	yarn -s run jest --color
 
-.PHONY: publish
 publish:
 	git push -u --tags origin master
 	npm publish
 
-.PHONY: update
-update:
-	npx updates -u
+deps:
 	rm -rf node_modules
-	npm i
+	yarn
 
-.PHONY: patch
-patch:
-	$(MAKE) test
-	npx ver patch
+update:
+	yarn -s run updates -cu
+	$(MAKE) deps
+
+patch: test
+	yarn -s run versions -C patch
 	$(MAKE) publish
 
-.PHONY: minor
-minor:
-	$(MAKE) test
-	npx ver minor
+minor: test
+	yarn -s run versions -C minor
 	$(MAKE) publish
 
-.PHONY: major
-major:
-	$(MAKE) test
-	npx ver major
+major: test
+	yarn -s run versions -C major
 	$(MAKE) publish
+
+.PHONY: test publish deps update patch minor major

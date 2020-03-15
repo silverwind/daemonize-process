@@ -1,18 +1,42 @@
 "use strict";
 
-const fs = require("fs");
-const fork = require("child_process").fork;
-const assert = require("assert");
+const del = require("del");
+const tempy = require("tempy");
+const {fork} = require("child_process");
+const {join} = require("path");
+const {platform} = require("os");
+const {test, expect, beforeAll, afterAll} = global;
+const {readFile, copyFile} = require("fs").promises;
 
-// This tests whether the parent pid of the daemonized process is 0 or 1 which
-// indicates the process was correctly orphaned. Also, it verifies the the
-// internal tracking environment variable is not leaked in the child.
+const testDir = tempy.directory();
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-fork("test-child.js").on("exit", () => {
-  setTimeout(() => {
-    const [ppid, envVar] = fs.readFileSync("test-output", "utf8").split(",");
-    fs.unlinkSync("test-output");
-    assert(["0", "1"].includes(ppid));
-    assert(envVar === "false");
-  }, 100);
+beforeAll(async () => {
+  await copyFile(join(__dirname, "index.js"), join(testDir, "index.js"));
+  await copyFile(join(__dirname, "fixtures/child.js"), join(testDir, "child.js"));
+});
+
+afterAll(async () => {
+  await del(testDir, {force: true});
+});
+
+test("simple", done => {
+  const child = fork(join(testDir, "child.js"));
+
+  child.on("exit", async () => {
+    await sleep(100);
+    const [ppid, envVar] = (await readFile(join(testDir, "test-output"), "utf8")).split(",");
+
+    // check if process was correctly orphaned. on unix, this should generally mean that
+    // pid 1 picked up the child, but it'll be different on other platforms.
+    if (platform() === "win32") {
+      expect(ppid).toMatch(/[0-9]+/);
+    } else {
+      expect(["0", "1"].includes(ppid)).toEqual(true);
+    }
+
+    // verify that internal tracking variable is not leaked to the child
+    expect(envVar).toEqual("false");
+    done();
+  });
 });
