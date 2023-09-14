@@ -1,29 +1,49 @@
-test:
-	yarn -s run eslint --color .
-	yarn -s run jest --color
+node_modules: package-lock.json
+	npm install --no-save
+	@touch node_modules
 
-publish:
+.PHONY: deps
+deps: node_modules
+
+.PHONY: lint
+lint: node_modules
+	npx eslint --color .
+
+.PHONY: lint-fix
+lint-fix: node_modules
+	npx eslint --color . --fix
+
+.PHONY: test
+test: node_modules
+	npx vitest
+
+.PHONY: test-update
+test-update: node_modules
+	npx vitest --update
+
+.PHONY: publish
+publish: node_modules
 	git push -u --tags origin master
 	npm publish
 
-deps:
-	rm -rf node_modules
-	yarn
+.PHONY: update
+update: node_modules
+	npx updates -cu
+	rm -rf node_modules package-lock.json
+	npm install
+	@touch node_modules
 
-update:
-	yarn -s run updates -cu
-	$(MAKE) deps
+.PHONY: path
+patch: node_modules lint test
+	npx versions patch package.json package-lock.json
+	@$(MAKE) --no-print-directory publish
 
-patch: test
-	yarn -s run versions -C patch
-	$(MAKE) publish
+.PHONY: minor
+minor: node_modules lint test
+	npx versions minor package.json package-lock.json
+	@$(MAKE) --no-print-directory publish
 
-minor: test
-	yarn -s run versions -C minor
-	$(MAKE) publish
-
-major: test
-	yarn -s run versions -C major
-	$(MAKE) publish
-
-.PHONY: test publish deps update patch minor major
+.PHONY: major
+major: node_modules lint test
+	npx versions major package.json package-lock.json
+	@$(MAKE) --no-print-directory publish

@@ -1,15 +1,14 @@
 # daemonize-process
-[![](https://img.shields.io/npm/v/daemonize-process.svg?style=flat)](https://www.npmjs.org/package/daemonize-process) [![](https://img.shields.io/npm/dm/daemonize-process.svg)](https://www.npmjs.org/package/daemonize-process)
+[![](https://img.shields.io/npm/v/daemonize-process.svg?style=flat)](https://www.npmjs.org/package/daemonize-process) [![](https://img.shields.io/npm/dm/daemonize-process.svg)](https://www.npmjs.org/package/daemonize-process) [![](https://packagephobia.com/badge?p=daemonize-process)](https://packagephobia.com/result?p=daemonize-process)
 
 > Daemonize the current Node.js process
 
 The module re-spawns the current process and then exits, which will lead to the new child process being adopted by `init` or similar mechanisms, effectively putting the current process into the background.
 
-Differences to the popular `daemon` module include:
+Differences to the `daemon` module include:
 
 - Exposes all options of `child_process.spawn`.
 - Cleans up `process.env` after itself.
-- Works on Node.js >= 10.
 
 ## Install
 
@@ -20,8 +19,11 @@ $ npm i daemonize-process
 ## Examples
 
 ```js
-const daemonizeProcess = require('daemonize-process');
+import {daemonizeProcess} from "daemonize-process";
+
 daemonizeProcess();
+
+// below here the process is daemonized
 ```
 
 ## API
