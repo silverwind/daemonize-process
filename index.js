@@ -19,7 +19,8 @@ export function daemonizeProcess(opts = {}) {
       node: execPath,
       script: argv[1],
       arguments: argv.slice(2),
-      exitCode: 0, ...opts
+      exitCode: 0,
+      ...opts,
     };
 
     spawn(o.node, [o.script].concat(o.arguments), o).unref();
