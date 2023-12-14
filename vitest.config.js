@@ -3,7 +3,7 @@ import {backendTest} from "vitest-config-silverwind";
 
 export default defineConfig({
   test: {
-    ...backendTest,
+    ...backendTest({url: import.meta.url}),
     testTimeout: 5000,
   },
 });
