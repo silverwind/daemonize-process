@@ -5,11 +5,11 @@ import {readFile, copyFile, rm} from "node:fs/promises";
 import {join} from "node:path";
 
 const testDir = mkdtempSync(join(tmpdir(), "daemonize-process-"));
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 beforeAll(async () => {
-  await copyFile(new URL("index.js", import.meta.url), join(testDir, "index.js"));
-  await copyFile(new URL("child.js", import.meta.url), join(testDir, "child.js"));
+  await copyFile(new URL("index.ts", import.meta.url), join(testDir, "index.ts"));
+  await copyFile(new URL("child.ts", import.meta.url), join(testDir, "child.ts"));
   await copyFile(new URL("package.json", import.meta.url), join(testDir, "package.json"));
 });
 
@@ -19,7 +19,7 @@ afterAll(async () => {
 
 test("simple", () => {
   return new Promise(resolve => {
-    const child = fork(join(testDir, "child.js"));
+    const child = fork(join(testDir, "child.ts"));
 
     child.on("exit", async () => {
       await sleep(1000); // give the child some time to exit
@@ -35,7 +35,7 @@ test("simple", () => {
 
       // verify that internal tracking variable is not leaked to the child
       expect(envVar).toEqual("false");
-      resolve();
+      resolve(undefined);
     });
   });
 });

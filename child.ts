@@ -1,4 +1,4 @@
-import {daemonizeProcess} from "./index.js";
+import {daemonizeProcess} from "./index.ts";
 import {writeFileSync} from "node:fs";
 import {env, ppid} from "node:process";
 
