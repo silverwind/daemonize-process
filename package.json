@@ -19,9 +19,8 @@
   },
   "devDependencies": {
     "@types/node": "22.13.4",
-    "eslint": "8.57.0",
-    "eslint-config-silverwind": "99.0.0",
-    "eslint-config-silverwind-typescript": "9.2.2",
+    "eslint": "9.39.2",
+    "eslint-config-silverwind": "120.1.2",
     "jest-extended": "4.0.2",
     "typescript": "5.7.3",
     "typescript-config-silverwind": "7.0.0",
