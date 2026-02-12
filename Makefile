@@ -11,12 +11,12 @@ deps: node_modules
 .PHONY: lint
 lint: node_modules
 	pnpm exec eslint --color .
-	pnpm exec tsc
+	pnpm exec tsgo
 
 .PHONY: lint-fix
 lint-fix: node_modules
 	pnpm exec eslint --color . --fix
-	pnpm exec tsc
+	pnpm exec tsgo
 
 .PHONY: test
 test: node_modules
@@ -35,7 +35,7 @@ $(DIST_FILES): $(SOURCE_FILES) pnpm-lock.yaml vite.config.ts
 .PHONY: publish
 publish: node_modules
 	git push -u --tags origin master
-	pnpm publish
+	pnpm publish --no-git-checks
 
 .PHONY: update
 update: node_modules
