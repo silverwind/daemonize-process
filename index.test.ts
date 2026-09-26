@@ -18,14 +18,19 @@ afterAll(async () => {
   await rm(testDir, {recursive: true});
 });
 
-test("daemonized child is orphaned and does not inherit the tracking variable", async () => {
-  await once(fork(join(testDir, "child.ts")), "exit");
+test.each([
+  {name: "default-env", customVar: "undefined"},
+  {name: "custom-env", customVar: "1"},
+])("$name: child daemonizes once, is orphaned, sees the custom env and not the tracking variable", async ({name, customVar}) => {
+  await once(fork(join(testDir, "child.ts"), [name]), "exit");
   await sleep(1000);
-  const [ppid, envVar] = (await readFile(join(testDir, "test-output"), "utf8")).split(",");
+  expect(await readFile(join(testDir, `${name}-starts`), "utf8")).toEqual("xx");
+  const [ppid, trackingVar, customVarValue] = (await readFile(join(testDir, `${name}-output`), "utf8")).split(",");
   if (platform() === "win32") {
     expect(ppid).toMatch(/[0-9]+/);
   } else {
     expect(["0", "1"]).toContain(ppid);
   }
-  expect(envVar).toEqual("false");
+  expect(trackingVar).toEqual("false");
+  expect(customVarValue).toEqual(customVar);
 });

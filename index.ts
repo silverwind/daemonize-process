@@ -19,7 +19,6 @@ export function daemonizeProcess(opts: DaemonizeProcessOpts = {}) {
     delete env[id];
   } else {
     const options: DaemonizeProcessOpts = {
-      env: Object.assign(env, opts.env, {[id]: "1"}),
       cwd: cwd(),
       stdio: "ignore",
       detached: true,
@@ -28,6 +27,7 @@ export function daemonizeProcess(opts: DaemonizeProcessOpts = {}) {
       arguments: argv.slice(2),
       exitCode: 0,
       ...opts,
+      env: opts.env ? {...opts.env, [id]: "1"} : Object.assign(env, {[id]: "1"}),
     };
     spawn(options.node!, [options.script!, ...options.arguments!], options).unref();
     exit(options.exitCode);
