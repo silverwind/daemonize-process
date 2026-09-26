@@ -4,5 +4,7 @@ import {argv, env, ppid} from "node:process";
 
 const name = argv[2];
 appendFileSync(new URL(`${name}-starts`, import.meta.url), "x");
-daemonizeProcess(name === "custom-env" ? {env: Object.create({...env, DAEMONIZE_TEST: "1"})} : undefined);
+daemonizeProcess(name === "custom-env" ?
+  {env: Object.create({...env, DAEMONIZE_TEST: "1"})} :
+  {node: undefined, script: undefined, arguments: undefined});
 writeFileSync(new URL(`${name}-output`, import.meta.url), `${ppid},${"_DAEMONIZE_PROCESS" in env},${env.DAEMONIZE_TEST}`);

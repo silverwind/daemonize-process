@@ -19,7 +19,7 @@ afterAll(async () => {
 });
 
 test.each([
-  {name: "default-env", customVar: "undefined"},
+  {name: "undefined-options", customVar: "undefined"},
   {name: "custom-env", customVar: "1"},
 ])("$name: child daemonizes once, is orphaned, sees the custom env and not the tracking variable", async ({name, customVar}) => {
   await once(fork(join(testDir, "child.ts"), [name]), "exit");
