@@ -10,13 +10,11 @@ Differences to the `daemon` module include:
 - Exposes all options of `child_process.spawn`.
 - Cleans up `process.env` after itself.
 
-## Install
+## Usage
 
-```console
-$ npm i daemonize-process
+```sh
+pnpm add daemonize-process
 ```
-
-## Examples
 
 ```js
 import {daemonizeProcess} from "daemonize-process";
@@ -38,7 +36,5 @@ The `options` object can contain any valid [`child_process.spawn` option](https:
 - `exitCode` *number* - The exit code to be used when exiting the parent process. Default: `0`.
 
 By default the standard streams of the child are ignored (e.g. attached to `/dev/null` or equivalent). If you need these streams, adjust the `stdio` option.
-
-## License
 
 © [silverwind](https://github.com/silverwind), distributed under BSD licence
