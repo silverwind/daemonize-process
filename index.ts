@@ -14,7 +14,7 @@ type DaemonizeProcessOpts = {
   exitCode?: number,
 } & SpawnOptions;
 
-export function daemonizeProcess(opts: DaemonizeProcessOpts = {}) {
+export function daemonizeProcess(opts: DaemonizeProcessOpts = {}): void {
   if (id in env) {
     delete env[id];
   } else {
